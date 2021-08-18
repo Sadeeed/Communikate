@@ -1,0 +1,6 @@
+djangoENV
+chat/__pycache__
+chat/migrations/__pycache__
+communikate/__pycache__
+userauth/__pycache__
+userauth/migrations/__pycache__
