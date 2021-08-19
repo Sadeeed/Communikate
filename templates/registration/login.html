@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communikate · Login</title>
+</head>
+<body>
+    {% if form.error %}
+    <p>Something went wrong please try again</p>
+    {% endif %}
+
+    {% if next %}
+    <p>You're not logged in yet</p>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+
+        <p>Username: {{ form.username }}</p>
+        <p>Password: {{ form.password }}</p>
+
+        <p><input type="submit" value="Login"></p>
+        <input type="hidden" name="next" value="{{ next }}">
+
+    </form>
+</body>
+</html>
