@@ -1,26 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Rooms</title>
-</head>
-<body>
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+{% extends 'base.html' %} 
 
-    <script>
-        document.querySelector('#room-name-input').focus();
-        document.querySelector('#room-name-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#room-name-submit').click();
-            }
-        };
+{% block content %}
 
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';
-        };
-    </script>
-</body>
-</html>
+<div class="mask d-flex align-items-center min-vh-100">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                <div class="card" style="border-radius: 15px; background-color: #202020">
+                    <div class="card-body p-5" style="color: #FFFFFF;">
+                        <h2 class="text-center mb-5" style="color: #FFFFFF;">Enter Chat Room</h2>
+
+                        <div class="input-group mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Room Name"
+                              aria-label="Room Name"
+                              aria-describedby="basic-addon2"
+                              id="room-name-input"
+                              style="color: #ffffff; background-color: #181818"
+                            />
+                            <div class="input-group-append">
+                              <button id="room-name-submit" class="btn btn-outline-secondary" type="button">Enter</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  document.querySelector("#room-name-input").focus();
+  document.querySelector("#room-name-input").onkeyup = function (e) {
+    if (e.keyCode === 13) {
+      // enter, return
+      document.querySelector("#room-name-submit").click();
+    }
+  };
+
+  document.querySelector("#room-name-submit").onclick = function (e) {
+    var roomName = document.querySelector("#room-name-input").value;
+    window.location.pathname = "/chat/" + roomName + "/";
+  };
+</script>
+
+{% endblock %}

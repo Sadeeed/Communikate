@@ -1,5 +1,6 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
+from .models import ChatMessage
 
 
 def index(request):
@@ -8,8 +9,9 @@ def index(request):
 
 def room(request, room_name):
     if request.user.is_authenticated:
-        return render(request, 'chat/room.html', {
-            'room_name': room_name
-        })
+        username = request.user.get_username()
+        messages = ChatMessage.objects.filter(chatRoom=room_name)
+
+        return render(request, 'chat/room.html', {'room_name': room_name, 'username': username, 'messages':messages})
     else:
         return HttpResponseRedirect('/accounts/login')
