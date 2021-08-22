@@ -9,16 +9,16 @@
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
-        <li><a href="chat" class="nav-link px-2 text-white">Chat</a></li>
-        <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+        <li><a href="/chat" class="nav-link px-2 text-white">Chat</a></li>
+        <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
       </ul>
 
       <div class="text-end">
         {% if user.is_authenticated %}
         <b>{{ user.username }}</b> &ensp; 
-        <a role="button" href="accounts/logout" class="btn btn-outline-light me-2">Logout</a>
+        <a role="button" href="/accounts/logout" class="btn btn-outline-light me-2">Logout</a>
         {% else %}
-        <a role="button" href='accounts/login' class="btn btn-outline-light me-2">Login</a>
+        <a role="button" href='/accounts/login' class="btn btn-outline-light me-2">Login</a>
         <a role="button" href='/register' class="btn btn-outline-light me-2">Register</a>
         {% endif %}
       </div>

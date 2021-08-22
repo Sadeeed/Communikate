@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login
 def index(request):
     return render(request, 'userauth/index.html')
 
+def about(request):
+    return render(request, 'userauth/about.html')
 
 def register(request):
     if request.method == 'POST':
