@@ -9,22 +9,27 @@
                 <div class="card" style="border-radius: 15px; background-color: #202020">
                     <div class="card-body p-5" style="color: #FFFFFF;">
                         <h2 class="text-center mb-5" style="color: #FFFFFF;">Enter Chat Room</h2>
-
                         <div class="input-group mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              placeholder="Room Name"
-                              aria-label="Room Name"
-                              aria-describedby="basic-addon2"
-                              id="room-name-input"
-                              style="color: #ffffff; background-color: #181818"
-                            />
+
+                          <form action="{% url 'chat' %}" method="POST">
+                            {% csrf_token %}
+                            <input class='form-control' id="room-name-input" name="room-name" type="text" style="color: #ffffff; background-color: #181818" required>
                             <div class="input-group-append">
-                              <button id="room-name-submit" class="btn btn-outline-secondary" type="button">Enter</button>
+                              <input type="submit" class="btn btn-outline-secondary" value="Enter">
                             </div>
+                          </form>
+
                         </div>
-                        
+                        <b>All Rooms: </b><br>
+                        {% for r in rooms %} 
+                        <a href="{% url 'room' r %}" id="{{ r }}" class="btn btn-outline-secondary" type="Button">{{ r }}</a>
+                        {% endfor %}
+
+                        <br>
+                        <b>My Rooms: </b><br>
+                        {% for r in my_rooms %}
+                        <a href="{% url 'room' r %}" id="{{ r }}" class="btn btn-outline-secondary" type="Button">{{ r }}</a>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -45,6 +50,7 @@
     var roomName = document.querySelector("#room-name-input").value;
     window.location.pathname = "/chat/" + roomName + "/";
   };
+
 </script>
 
 {% endblock %}

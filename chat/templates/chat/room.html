@@ -1,6 +1,4 @@
-{% extends 'base.html' %} 
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="mask d-flex align-items-center min-vh-100 max-vh-100">
   <div class="container h-100">
@@ -11,36 +9,57 @@
           style="border-radius: 15px; background-color: #202020"
         >
           <div class="card-body p-5" style="color: #ffffff">
-            <h2 class="text-center mb-5" style="color: #ffffff"><b>{{ room_name }}</b></h2>
+            <h2 class="text-center mb-5" style="color: #ffffff">
+              <b>{{ room_name }}</b>
+            </h2>
 
             <div class="card" style="color: #ffffff; background-color: #181818">
-                <div class="card-body min-vh-10" id="chat-log" style="max-height: 300px; overflow-y: scroll;">
-                    {% for m in messages %}<b>{{ m.user }}</b>: {{ m.msgContent }}<br>{% endfor %}
-                </div>
+              <div
+                class="card-body min-vh-10"
+                id="chat-log"
+                style="max-height: 300px; overflow-y: scroll"
+              >
+                {% for m in messages %} {% if m.user == user.username %}
+                <p class="card-text text-left">
+                  <b>{{ m.user }}</b> &nbsp {{ m.msgTimestamp }}
+                </p>
+                <p>{{ m.msgContent }}</p>
+                {% else %}
+                <p class="card-text text-end">
+                  {{ m.msgTimestamp }} &nbsp <b>{{ m.user }}</b>
+                </p>
+                <p class="card-text text-end">{{ m.msgContent }}</p>
+                {% endif %} {% endfor %}
+              </div>
             </div>
-            
-            <br/>
+
+            <br />
 
             <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Message"
-                  aria-label="Message"
-                  aria-describedby="basic-addon2"
-                  id="chat-message-input"
-                  style="color: #ffffff; background-color: #181818"
-                />
-                <div class="input-group-append">
-                  <button id="chat-message-submit" class="btn btn-outline-secondary" type="button">Send</button>
-                </div>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Message"
+                aria-label="Message"
+                aria-describedby="basic-addon2"
+                id="chat-message-input"
+                style="color: #ffffff; background-color: #181818"
+              />
+              <div class="input-group-append">
+                <button
+                  id="chat-message-submit"
+                  class="btn btn-outline-secondary"
+                  type="button"
+                >
+                  Send
+                </button>
+              </div>
             </div>
 
-            {{ room_name|json_script:"room-name" }}
-            {{ username |json_script:"username" }}
+            {{ room_name |json_script:"room-name" }} {{ username
+            |json_script:"username" }} {{ timestamp |json_script:"timestamp" }}
 
             <script>
-
               function scrollToBottom() {
                 let objDiv = document.getElementById("chat-log");
                 objDiv.scrollTop = objDiv.scrollHeight;
@@ -54,6 +73,9 @@
               const userName = JSON.parse(
                 document.getElementById("username").textContent
               );
+              const timeStamp = JSON.parse(
+                document.getElementById("timestamp").textContent
+              );
 
               const chatSocket = new WebSocket(
                 "ws://" + window.location.host + "/ws/chat/" + roomName + "/"
@@ -63,9 +85,15 @@
                 const data = JSON.parse(e.data);
 
                 if (data.message) {
-                    document.querySelector('#chat-log').innerHTML += ('<b>' + data.username + '</b>: ' + data.message + '<br>');
+                  document.querySelector("#chat-log").innerHTML +=
+                    "<b>" +
+                    data.username +
+                    "</b>: " +
+                    data.message +
+                    data.timestamp +
+                    "<br>";
                 } else {
-                    alert('Empty messages are not allowed')
+                  alert("Empty messages are not allowed");
                 }
                 scrollToBottom();
               };
@@ -95,6 +123,7 @@
                       message: message,
                       username: userName,
                       room: roomName,
+                      timestamp: timeStamp,
                     })
                   );
                   messageInputDom.value = "";
