@@ -1,4 +1,5 @@
 djangoENV
+.vscode
 chat/__pycache__
 chat/migrations/__pycache__
 communikate/__pycache__
